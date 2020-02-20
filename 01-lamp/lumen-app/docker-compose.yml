@@ -1,0 +1,28 @@
+version: "3.7"
+
+services:
+  app:
+    build: .
+    depends_on:
+      - mariadb
+    ports:
+      - 8081:80
+    volumes:
+      - .:/srv/app
+
+  mariadb:
+    image: mariadb:10.5.1-bionic
+    ports:
+      - 13306:3306
+    volumes:
+      - mariadb:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: homestead
+      MYSQL_USER: homestead
+      MYSQL_PASSWORD: secret
+
+volumes:
+  mariadb:
+    driver: local
+    name: mariadb
